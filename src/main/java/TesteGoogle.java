@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TesteGoogle {
-
     @Test
     public void teste(){
         WebDriver driver = new FirefoxDriver();
@@ -12,6 +11,4 @@ public class TesteGoogle {
         driver.get("https://www.google.com");
         Assert.assertEquals("Google",driver.getTitle());
     }
-
-
 }
