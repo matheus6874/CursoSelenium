@@ -1,10 +1,13 @@
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -84,4 +87,47 @@ public class TesteCampoTreinamento {
         driver.quit();
     }
 
+    @Test
+    public void verificarValoresComboMultiplo() {
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        WebElement elemento = driver.findElement(By.id("elementosForm:esportes"));
+        Select select = new Select(elemento);
+        select.selectByVisibleText("Natacao");
+        select.selectByVisibleText("Corrida");
+        select.selectByVisibleText("O que eh esporte?");
+        List<WebElement> selecionados = select.getAllSelectedOptions();
+        Assert.assertEquals(3,selecionados.size());
+        driver.quit();
+    }
+
+    @Test
+    public void deveInteragirComBotoes() {
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        driver.findElement(By.id("buttonSimple")).click();
+        Assert.assertEquals("Obrigado!",driver.findElement(By.id("buttonSimple")).getAttribute("value"));
+        driver.quit();
+    }
+
+    @Test
+    public void deveBuscarTextoNaTela() {
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        Assert.assertTrue(driver.findElement(By.tagName("h3")).getText().contains("Campo de Treinamento"));
+        driver.quit();
+    }
+
+    @Test
+    public void deveInteragirComLink() {
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        driver.findElement(By.linkText("Voltar")).click();
+        Assert.assertEquals("Voltou!",driver.findElement(By.id("resultado")).getText());
+        driver.quit();
+    }
 }
