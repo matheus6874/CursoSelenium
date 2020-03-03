@@ -9,6 +9,6 @@ public class TesteGoogle {
         WebDriver driver = new FirefoxDriver();
         driver.manage().window().maximize();
         driver.get("https://www.google.com");
-        Assert.assertEquals("Google",driver.getTitle());
+        Assert.assertEquals("Googlee",driver.getTitle());
     }
 }
