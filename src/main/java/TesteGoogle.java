@@ -1,27 +1,34 @@
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TesteGoogle {
-    private WebDriver driver = new FirefoxDriver();;
+
+    private WebDriver driver;
 
     @Before
     public void inicializa(){
-        driver.manage().window().maximize();
+        driver = new FirefoxDriver();
+        driver.manage().window().setSize(new Dimension(1200, 765));
     }
 
     @After
-    public void fechaNavegador(){
+    public void finaliza(){
         driver.quit();
     }
 
     @Test
-    public void teste(){
-        driver.get("https://www.google.com");
-        Assert.assertEquals("Google",driver.getTitle());
+    public void teste() {
+//		System.setProperty("webdriver.gecko.driver", "/Users/wcaquino/Downloads/geckodriver");
+//		System.setProperty("webdriver.chrome.driver", "/Users/wcaquino/Downloads/chromedriver");
+//		WebDriver driver = new ChromeDriver();
+//		WebDriver driver = new InternetExplorerDriver();
+        driver.get("http://www.google.com");
+        Assert.assertEquals("Google", driver.getTitle());
     }
 
 }
