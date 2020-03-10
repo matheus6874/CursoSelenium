@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class TesteCadastro {
 
@@ -13,7 +13,7 @@ public class TesteCadastro {
 
     @Before
     public void inicializa(){
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1200, 765));
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         campoTreinamentoPage = new CampoTreinamentoPage(driver);
@@ -31,15 +31,15 @@ public class TesteCadastro {
         campoTreinamentoPage.setSexoMasculino();
         campoTreinamentoPage.setComidaPizza();
         campoTreinamentoPage.setEscolaridade("Mestrado");
-        campoTreinamentoPage.setEsporte("Natação");
+        campoTreinamentoPage.setEsporte("Natacao");
         campoTreinamentoPage.cadastrar();
 
-        Assert.assertTrue(campoTreinamentoPage.obterResultadoCadastro().startsWith("Cadastrado!"));
-        Assert.assertTrue(campoTreinamentoPage.obterNomeCadastro().endsWith("Matheus"));
-        Assert.assertTrue(campoTreinamentoPage.obterSobrenomeCadastro().endsWith("Cristino"));
-        Assert.assertEquals("Sexo: Masculino",campoTreinamentoPage.obterSexoCadastro());
-        Assert.assertEquals("Comida: Pizza", campoTreinamentoPage.obterComidaCadastro());
-        Assert.assertEquals("Escolaridade: mestrado", campoTreinamentoPage.obterEscolaridadeCadastro());
-        Assert.assertEquals("Esportes: Natacao", campoTreinamentoPage.obterEsporteCadastro());
+        Assert.assertEquals("Cadastrado!",campoTreinamentoPage.obterResultadoCadastro());
+        Assert.assertEquals("Matheus",campoTreinamentoPage.obterNomeCadastro());
+        Assert.assertEquals("Cristino",campoTreinamentoPage.obterSobrenomeCadastro());
+        Assert.assertEquals("Masculino",campoTreinamentoPage.obterSexoCadastro());
+        Assert.assertEquals("Pizza", campoTreinamentoPage.obterComidaCadastro());
+        Assert.assertEquals("mestrado", campoTreinamentoPage.obterEscolaridadeCadastro());
+        Assert.assertEquals("Natacao", campoTreinamentoPage.obterEsporteCadastro());
     }
 }

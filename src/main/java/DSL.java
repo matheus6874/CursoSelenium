@@ -29,9 +29,14 @@ public class DSL {
 
     /********* Radio e Check ************/
 
-    public void clicarRadio(String id) {
-        driver.findElement(By.id(id)).click();
+    public void clicarRadio(By by) {
+        driver.findElement(by).click();
     }
+
+    public void clicarRadio(String id) {
+        clicarRadio(By.id(id));
+    }
+
 
     public boolean isRadioMarcado(String id){
         return driver.findElement(By.id(id)).isSelected();
@@ -170,4 +175,54 @@ public class DSL {
         return js.executeScript(cmd,param);
 
     }
+
+    /************** Tabela *********************/
+    public void clicarBotaoTabela(String colunaBusca, String valor, String colunaBotao, String idTabela){
+        //procurar coluna do registro
+        WebElement tabela = driver.findElement(By.xpath("//*[@id='elementosForm:tableUsuarios']"));
+        int idColuna = obterIndiceColuna(colunaBusca, tabela);
+
+        //encontrar a linha do registro
+        int idLinha = obterIndiceLinha(valor, tabela, idColuna);
+
+        //procurar coluna do botao
+        int idColunaBotao = obterIndiceColuna(colunaBotao, tabela);
+
+        //clicar no botao da celula encontrada
+        WebElement celula = tabela.findElement(By.xpath(".//tr["+idLinha+"]/td["+idColunaBotao+"]"));
+        celula.findElement(By.xpath(".//input")).click();
+
+    }
+
+    protected int obterIndiceLinha(String valor, WebElement tabela, int idColuna) {
+        List<WebElement> linhas = tabela.findElements(By.xpath("./tbody/tr/td["+idColuna+"]"));
+        int idLinha = -1;
+        for(int i = 0; i < linhas.size(); i++) {
+            if(linhas.get(i).getText().equals(valor)) {
+                idLinha = i+1;
+                break;
+            }
+        }
+        return idLinha;
+    }
+
+    protected int obterIndiceColuna(String coluna, WebElement tabela) {
+        List<WebElement> colunas = tabela.findElements(By.xpath(".//th"));
+        int idColuna = -1;
+        for(int i = 0; i < colunas.size(); i++) {
+            if(colunas.get(i).getText().equals(coluna)) {
+                idColuna = i+1;
+                break;
+            }
+        }
+        return idColuna;
+    }
+
+    /*Prime*/
+
+    public void selecionarComboPrime(String radical, String valor) {
+        clicarRadio(By.xpath("//*[@id='"+radical+"_input']/../..//span"));
+        clicarRadio(By.xpath("//*[@id='"+radical+"_items']//li[.='"+valor+"']"));
+    }
+
 }
