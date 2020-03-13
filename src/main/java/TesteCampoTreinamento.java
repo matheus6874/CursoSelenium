@@ -1,30 +1,27 @@
 import java.util.Arrays;
 import java.util.List;
-
 import core.DSL;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
+import static core.DriverFactory.getDriver;
+import static core.DriverFactory.killDriver;
 
 public class TesteCampoTreinamento {
 
-    private WebDriver driver;
     private DSL dsl;
 
     @Before
     public void inicializa(){
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL(driver);
+        getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL();
     }
 
     @After
     public void finaliza(){
-        //driver.quit();
+        killDriver();
     }
 
     @Test
@@ -111,12 +108,12 @@ public class TesteCampoTreinamento {
 
     @Test
     public void testaJavaScript(){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
         //js.executeScript("alert('Testando Js via selenum')");
         js.executeScript("document.getElementById('elementosForm:nome').value = 'Escrita via js'");
         js.executeScript("document.getElementById('elementosForm:sobrenome').type = 'radio'");
 
-        WebElement element = driver.findElement(By.id("elementosForm:nome"));
+        WebElement element = getDriver().findElement(By.id("elementosForm:nome"));
         js.executeScript("arguments[0].style.border = arguments[1]",element,"solid 4px red");
 
     }

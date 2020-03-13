@@ -5,16 +5,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import static core.DriverFactory.getDriver;
+import static core.DriverFactory.killDriver;
 
 @RunWith(Parameterized.class)
 public class TesteRegrasCadastro {
 
-    private WebDriver driver;
     private DSL dsl;
     private CampoTreinamentoPage campoTreinamentoPage;
 
@@ -33,17 +32,14 @@ public class TesteRegrasCadastro {
 
     @Before
     public void inicializa(){
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL(driver);
-        campoTreinamentoPage = new CampoTreinamentoPage(driver);
+        getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL();
+        campoTreinamentoPage = new CampoTreinamentoPage();
     }
 
     @After
     public void finaliza(){
-        driver.quit();
-        //driver.navigate().refresh();
+        killDriver();
     }
 
     @Parameterized.Parameters
